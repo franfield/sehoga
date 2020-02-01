@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 @Entity
 public class Event {
-
     @Id
     @GeneratedValue
     Long id;
@@ -12,8 +11,7 @@ public class Event {
     @OneToOne
     Teacher teacher;
 
-    ClassType
-            classType;
+    ClassType classType;
 
     String name;
 

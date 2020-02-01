@@ -17,4 +17,23 @@ public class EventTeaching {
 
     @OneToOne
     Event event_;
+
+    public EventTeaching(Event event, Teacher teacher) {
+        this.event_ = event;
+        this.teacher = teacher;
+    }
+
+    public EventTeaching() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public Event getEvent_() {
+        return event_;
+    }
 }

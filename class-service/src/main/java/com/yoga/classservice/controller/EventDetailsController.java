@@ -25,7 +25,6 @@ public class EventDetailsController {
         return eventService.getStudentsByClass(eventService.getEventById(eventId));
     }
 
-
     @GetMapping
     public List<Event> getEvents() {
         return eventService.getAllEvents();

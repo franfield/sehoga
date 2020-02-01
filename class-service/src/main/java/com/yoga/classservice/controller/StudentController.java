@@ -20,5 +20,4 @@ public class StudentController {
     public void addStudent(@RequestBody Student student) {
         studentService.addStudent(student);
     }
-
 }
