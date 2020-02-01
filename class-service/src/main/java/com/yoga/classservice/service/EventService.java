@@ -26,7 +26,7 @@ public class EventService {
     @Autowired
     EventTeachingRepository eventTeachingRepository;
 
-    public List<Event> getAllClasses() {
+    public List<Event> getAllEvents() {
         List<Event> aClasses = new ArrayList<Event>();
         eventRepository.findAll().forEach((n) -> aClasses.add(n));
         return aClasses;
