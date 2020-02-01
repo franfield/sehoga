@@ -1,6 +1,7 @@
 package com.yoga.classservice.controller;
 
 import com.yoga.classservice.model.Event;
+import com.yoga.classservice.model.Student;
 import com.yoga.classservice.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,12 @@ public class EventDetailsController {
     public Event getEvent(@PathVariable("eventId") Long eventId) {
         return  eventService.getEventById(eventId);
     }
+
+    @RequestMapping({"/{eventId}/students"})
+    public List<Student> getStudentsInClass(@PathVariable("eventId") Long eventId) {
+        return eventService.getStudentsByClass(eventService.getEventById(eventId));
+    }
+
 
     @GetMapping
     public List<Event> getEvents() {
