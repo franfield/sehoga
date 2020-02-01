@@ -1,12 +1,10 @@
 package com.yoga.classservice.service;
 
-import com.yoga.classservice.model.Event;
-import com.yoga.classservice.model.EventAttendance;
-import com.yoga.classservice.model.Student;
-import com.yoga.classservice.model.Teacher;
+import com.yoga.classservice.model.*;
 import com.yoga.classservice.repository.EventAttendanceRepository;
 import com.yoga.classservice.repository.EventRepository;
 import com.yoga.classservice.repository.EventTeachingRepository;
+import com.yoga.classservice.repository.LocationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +23,9 @@ public class EventService {
 
     @Autowired
     EventTeachingRepository eventTeachingRepository;
+
+    @Autowired
+    LocationRepository locationRepository;
 
     public List<Event> getAllEvents() {
         List<Event> aClasses = new ArrayList<Event>();
@@ -58,5 +59,10 @@ public class EventService {
 
     public void deleteClass(Long id) {
         eventRepository.deleteById(id);
+    }
+
+    public List<Event> getEventsByLocation(Long locationId) {
+        Location location = locationRepository.findById(locationId).get();
+        return eventRepository.getAllByLocationEquals(location);
     }
 }

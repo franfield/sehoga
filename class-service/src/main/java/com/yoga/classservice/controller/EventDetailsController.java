@@ -25,6 +25,11 @@ public class EventDetailsController {
         return eventService.getStudentsByClass(eventService.getEventById(eventId));
     }
 
+    @RequestMapping("/in/{locationId}")
+    public List<Event> getEventsByID(@PathVariable("locationId") Long locationId) {
+        return eventService.getEventsByLocation(locationId);
+    }
+
     @GetMapping
     public List<Event> getEvents() {
         return eventService.getAllEvents();

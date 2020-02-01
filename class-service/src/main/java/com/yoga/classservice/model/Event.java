@@ -11,6 +11,9 @@ public class Event {
     @OneToOne
     Teacher teacher;
 
+    @OneToOne
+    Location location;
+
     ClassType classType;
 
     String name;
