@@ -28,10 +28,4 @@ public class EventDetailsController {
     public void addEvent(@RequestBody Event event) {
         eventService.addEvent(event);
     }
-
-
-//    @RequestMapping("/{classId}")
-//    public ClassDetail getClassDetail(@PathVariable("classId") int classId) {
-//        return new ClassDetail(1,"This class fucks!!!");
-//    }
 }
