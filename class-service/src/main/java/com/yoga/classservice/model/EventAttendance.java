@@ -16,5 +16,13 @@ public class EventAttendance {
     Student student;
 
     @OneToOne
-    Event event_;
+    Event event;
+
+    public Student getStudent() {
+        return this.student;
+    }
+
+    public Event getEvent() {
+        return this.event;
+    }
 }

@@ -16,4 +16,5 @@ public class Event {
     classType;
 
     String name;
+
 }

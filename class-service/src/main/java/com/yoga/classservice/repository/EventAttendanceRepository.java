@@ -8,5 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface EventAttendanceRepository extends CrudRepository<EventAttendance,Long> {
-    public List<Student> getStudentsByClass_(Event event_);
+    public List<EventAttendance> getAllByEventEquals(Event event);
 }
