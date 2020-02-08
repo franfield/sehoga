@@ -17,11 +17,11 @@ public class RegistrationController {
 
     @PostMapping("/event/student")
     public void registerStudentForEvent(@RequestBody EventRegistrationRequest eventRegistrationRequest) {
-        registrationService.registerStudentForEvent(eventRegistrationRequest.getEventId(),eventRegistrationRequest.getPersonId());
+        registrationService.registerStudentForEvent(eventRegistrationRequest.getPersonId(),eventRegistrationRequest.getEventId());
     }
 
     @PostMapping("/event")
     public void registerEvent(@RequestBody EventRegistrationRequest eventRegistrationRequest) {
-        registrationService.registerTeacherForEvent(eventRegistrationRequest.getEventId(),eventRegistrationRequest.getPersonId());
+        registrationService.registerTeacherForEvent(eventRegistrationRequest.getPersonId(),eventRegistrationRequest.getEventId());
     }
 }

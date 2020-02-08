@@ -28,6 +28,11 @@ public class TeacherController {
         teacherService.addTeacher(teacher);
     }
 
+    @GetMapping
+    public List<Teacher> getTeachers() {
+        return teacherService.getAllTeachers();
+    }
+
     @RequestMapping("/{teacherId}")
     public Teacher getTeacher(@PathVariable Long teacherId){
         return teacherService.getTeacher(teacherId);

@@ -1,10 +1,8 @@
 package com.yoga.classservice.service;
 
 import com.yoga.classservice.model.*;
-import com.yoga.classservice.repository.EventAttendanceRepository;
-import com.yoga.classservice.repository.EventRepository;
-import com.yoga.classservice.repository.EventTeachingRepository;
-import com.yoga.classservice.repository.LocationRepository;
+import com.yoga.classservice.model.requestwrapper.EventCreationRequest;
+import com.yoga.classservice.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +24,9 @@ public class EventService {
 
     @Autowired
     LocationRepository locationRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
 
     public List<Event> getAllEvents() {
         List<Event> aClasses = new ArrayList<Event>();
@@ -64,5 +65,25 @@ public class EventService {
     public List<Event> getEventsByLocation(Long locationId) {
         Location location = locationRepository.findById(locationId).get();
         return eventRepository.getAllByLocationEquals(location);
+    }
+
+    public void createEvent(EventCreationRequest eventCreationRequest) throws Exception {
+        Optional<Teacher> teacher = teacherRepository.findById(eventCreationRequest.getTeacherId());
+        Optional<Location> location = locationRepository.findById(eventCreationRequest.getLocationId());
+        Event event = new Event();
+        event.setName(eventCreationRequest.getName());
+        if (teacher.isPresent()) {
+            event.setTeacher(teacher.get());
+        }
+        else {
+            throw new Exception("teacher not there");
+        }
+        if (location.isPresent()) {
+            event.setLocation(location.get());
+        }
+        else {
+            throw new Exception("location not there");
+        }
+        eventRepository.save(event);
     }
 }

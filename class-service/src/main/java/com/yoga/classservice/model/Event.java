@@ -14,6 +14,8 @@ public class Event {
     @OneToOne
     Location location;
 
+  //  Long teacherId;
+
     ClassType classType;
 
     String name;
@@ -51,4 +53,6 @@ public class Event {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void setLocation(Location location) {this.location=location;}
 }

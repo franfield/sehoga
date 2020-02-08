@@ -2,6 +2,7 @@ package com.yoga.classservice.controller;
 
 import com.yoga.classservice.model.Event;
 import com.yoga.classservice.model.Student;
+import com.yoga.classservice.model.requestwrapper.EventCreationRequest;
 import com.yoga.classservice.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,12 @@ public class EventDetailsController {
     }
 
     @PostMapping
-    public void addEvent(@RequestBody Event event) {
-        eventService.addEvent(event);
+    public void addEvent(@RequestBody EventCreationRequest event) {
+        try {
+            eventService.createEvent(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
