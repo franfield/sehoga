@@ -1,5 +1,7 @@
 package com.yoga.classservice.service;
 
+import com.yoga.classservice.exception.LocationNotFoundException;
+import com.yoga.classservice.exception.TeacherNotFoundException;
 import com.yoga.classservice.model.*;
 import com.yoga.classservice.model.requestwrapper.EventCreationRequest;
 import com.yoga.classservice.repository.*;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
@@ -62,9 +65,14 @@ public class EventService {
         eventRepository.deleteById(id);
     }
 
-    public List<Event> getEventsByLocation(Long locationId) {
-        Location location = locationRepository.findById(locationId).get();
-        return eventRepository.getAllByLocationEquals(location);
+    public List<Event> getEventsByLocation(Long locationId) throws LocationNotFoundException {
+            Optional<Location> location = locationRepository.findById(locationId);
+            if (location.isPresent()) {
+                return eventRepository.getAllByLocationEquals(location.get());
+            } else {
+                throw new LocationNotFoundException();
+            }
+
     }
 
     public void createEvent(EventCreationRequest eventCreationRequest) throws Exception {
@@ -76,13 +84,13 @@ public class EventService {
             event.setTeacher(teacher.get());
         }
         else {
-            throw new Exception("teacher not there");
+            throw new TeacherNotFoundException();
         }
         if (location.isPresent()) {
             event.setLocation(location.get());
         }
         else {
-            throw new Exception("location not there");
+            throw new LocationNotFoundException();
         }
         eventRepository.save(event);
     }
