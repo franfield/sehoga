@@ -16,7 +16,7 @@ public class Event {
 
   //  Long teacherId;
 
-    ClassType classType;
+    ClassType classType = ClassType.YIN;
 
     String name;
 
