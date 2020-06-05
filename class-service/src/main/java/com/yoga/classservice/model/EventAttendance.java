@@ -18,6 +18,13 @@ public class EventAttendance {
     @OneToOne
     Event event;
 
+    public EventAttendance() {}
+
+    public EventAttendance(Event event, Student student) {
+        this.event = event;
+        this.student = student;
+    }
+
     public Student getStudent() {
         return this.student;
     }

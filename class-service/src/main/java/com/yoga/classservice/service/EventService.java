@@ -1,17 +1,16 @@
 package com.yoga.classservice.service;
 
-import com.yoga.classservice.model.Event;
-import com.yoga.classservice.model.EventAttendance;
-import com.yoga.classservice.model.Student;
-import com.yoga.classservice.model.Teacher;
-import com.yoga.classservice.repository.EventAttendanceRepository;
-import com.yoga.classservice.repository.EventRepository;
-import com.yoga.classservice.repository.EventTeachingRepository;
+import com.yoga.classservice.exception.LocationNotFoundException;
+import com.yoga.classservice.exception.TeacherNotFoundException;
+import com.yoga.classservice.model.*;
+import com.yoga.classservice.model.requestwrapper.EventCreationRequest;
+import com.yoga.classservice.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
@@ -26,7 +25,13 @@ public class EventService {
     @Autowired
     EventTeachingRepository eventTeachingRepository;
 
-    public List<Event> getAllClasses() {
+    @Autowired
+    LocationRepository locationRepository;
+
+    @Autowired
+    TeacherRepository teacherRepository;
+
+    public List<Event> getAllEvents() {
         List<Event> aClasses = new ArrayList<Event>();
         eventRepository.findAll().forEach((n) -> aClasses.add(n));
         return aClasses;
@@ -58,5 +63,35 @@ public class EventService {
 
     public void deleteClass(Long id) {
         eventRepository.deleteById(id);
+    }
+
+    public List<Event> getEventsByLocation(Long locationId) throws LocationNotFoundException {
+            Optional<Location> location = locationRepository.findById(locationId);
+            if (location.isPresent()) {
+                return eventRepository.getAllByLocationEquals(location.get());
+            } else {
+                throw new LocationNotFoundException();
+            }
+
+    }
+
+    public void createEvent(EventCreationRequest eventCreationRequest) throws Exception {
+        Optional<Teacher> teacher = teacherRepository.findById(eventCreationRequest.getTeacherId());
+        Optional<Location> location = locationRepository.findById(eventCreationRequest.getLocationId());
+        Event event = new Event();
+        event.setName(eventCreationRequest.getName());
+        if (teacher.isPresent()) {
+            event.setTeacher(teacher.get());
+        }
+        else {
+            throw new TeacherNotFoundException();
+        }
+        if (location.isPresent()) {
+            event.setLocation(location.get());
+        }
+        else {
+            throw new LocationNotFoundException();
+        }
+        eventRepository.save(event);
     }
 }

@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface EventTeachingRepository extends CrudRepository<EventTeaching,Long> {
     public List<Event> getClassByTeacher(Teacher teacher);
+
+    List<EventTeaching> getAllByTeacherEquals(Teacher teacher);
 }
